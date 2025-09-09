@@ -29,11 +29,11 @@ This story point calculator can be used by an individual or by a team. The goal 
 
 4. Click `Calculate Story Point` button.
 
-5. Diacuss among each other whether the story point is reasonable.
+5. Discuss among each other whether the story point is reasonable.
 
 6. Go back to the Jira issue and set the story point based on the team agreement.
  
-7. Copy the generated summary and paste it in your Jira Issue. (Note: it's better to paste it in the comments foe easier access to history in case the work item has been re-estimated).
+7. Copy the generated summary and paste it in your Jira Issue. (Note: it's better to paste it in the comments for easier access to history in case the work item has been re-estimated).
 
 ---
 
@@ -63,6 +63,7 @@ Each category contributes to the total score based on the selected option and it
 | Complexity     | 2.0x                | 3.0x             |
 | Risk           | 1.0x                | 1.5x             |
 
+Details on why these weight values were selected can be found in the comments in the [codebase](https://github.com/kendoce/story-calculator/blob/61e41650614a12e86e3f661efb648cc02f49da12/index.html#L578C1-L596C15).
 The total score is calculated using a formulas that accepts the weight for the selected scope:
 
 #### Scope Formula
@@ -157,3 +158,4 @@ This mapping is not tied to your team’s actual velocity (e.g., how many points
 ### Author
 
 Created and maintained by [kendoce](https://github.com/kendoce).
+
