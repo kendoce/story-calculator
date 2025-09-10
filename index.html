@@ -241,7 +241,7 @@
 
             <div class="section">
                 <h3>Familiarity</h3>
-                <p>How familiar is the team with the domain, tech, or task?</p>
+                <p>How familiar is the team with the domain, tech, or task? How much extra effort we expect to spend learning before we can deliver confidently</p>
                 <div class="button-group" id="familiarity">
                     <div class="option"><button value="1">Very Familiar</button><span class="desc"></span></div>
                     <div class="option"><button value="3">Familiar</button><span class="desc"></span></div>
@@ -351,16 +351,16 @@
             },
             familiarity: {
                 epic: [
-                    "Team has delivered similar epics before.",
-                    "Team has partial experience with similar initiatives.",
-                    "Some aspects are new or require learning.",
-                    "Entirely new domain or approach for the team."
+                    "Team has delivered very similar epics before. AI tools (code completion, documentation lookup) can be used effectively without much research.",
+                    "Team has partial experience with similar initiatives. Some AI-assisted learning might be needed, but the team can quickly adapt.",
+                    "Several aspects are new or require structured learning. AI can help but still requires validation and pair-programming to avoid misuse.",
+                    "Entirely new domain or approach for the team. Even with AI, significant exploration, prototyping, and external consultation may be required."
                 ],
                 children: [
-                    "The team has done this kind of work many times. It uses known tools, patterns, or domains. Even if the story is new, the approach is routine.",
-                    "The team has worked on similar tasks or technologies. There may be some differences, but the overall approach is recognizable.",
-                    "The story includes unfamiliar elements — a new integration, tool, or domain — but still builds on prior experience. The team may need to learn a few things.",
-                    "The team has no prior experience with the technology, domain, or type of work. This may involve a new platform, architecture, or business area with no overlap to past work."
+                    "The team has done this many times. Tools, patterns, and domain are known. AI speeds up repetitive work.",
+                    "Team has done similar tasks or used similar tools. Some differences exist, but AI can quickly fill gaps with examples or patterns.",
+                    "The story includes new elements — e.g. an unfamiliar API — but the team can ramp up with AI guidance, official docs, and targeted research.",
+                    "The team has no prior experience with this tech/domain. AI can help generate prototypes or explain concepts, but human learning still drives delivery."
                 ]
             },
             volume: {
@@ -379,16 +379,16 @@
             },
             complexity: {
                 epic: [
-                    "Minimal architectural impact, isolated to a single component or service.",
-                    "Involves coordination across a few components or services.",
-                    "Requires architectural decisions or affects multiple systems.",
+                    "Minimal architectural impact, isolated to a single component or service. AI can handle most boilerplate changes.",
+                    "Involves coordination across a few components or services. AI can assist with integration patterns, but careful review and manual orchestration are required.",
+                    "Requires architectural decisions or affects multiple systems. AI can help generate PoCs or reference implementations, but design decisions remain human-driven.",
                     "Involves groundbreaking design, cross-platform impact, or foundational changes."
                 ],
                 children: [
-                    "Dev: Straightforward code changes.\nQA: Basic, happy-path testing is sufficient.\nInvestigation: Simple analysis or validation.",
-                    "Dev: Involves several interacting components.\nQA: Requires a clear test plan with multiple scenarios, possibly including automation of common paths.\nInvestigation: Moderate complexity in research or data gathering.",
-                    "Dev: Involves complex algorithms or deep architectural changes.\nQA: Involves exhaustive end-to-end testing or non-obvious edge cases, may require custom automation scripts.\nInvestigation: Requires deep analysis or prototyping.",
-                    "Dev: Requires innovative R&D or affects core, fragile systems.\nQA: Requires a new testing framework or strategy to even validate.\nInvestigation: Involves building tools or frameworks to support discovery."
+                    "Dev: Straightforward code changes, mostly boilerplate. AI likely produces >80% of the solution accurately. Automated unit tests can be generated quickly.\nQA: Basic, happy-path testing is sufficient.\nInvestigation: Simple analysis or validation; AI can help confirm assumptions quickly.",
+                    "Dev: Involves several interacting components or APIs. AI suggestions help but require careful validation.\nQA: Requires a clear test plan with multiple scenarios, possibly including automation of common paths. AI can assist with generating test cases but human review is needed.\nInvestigation: Moderate complexity in research or data gathering; AI can speed up documentation lookup or generate starter code.",
+                    "Dev: Involves complex algorithms, tricky state management, or deep architectural changes. AI can propose approaches but requires heavy validation and iteration.\nQA: Exhaustive end-to-end testing or non-obvious edge cases, may require custom automation scripts. AI can suggest tests but cannot replace exploratory testing.\nInvestigation: Requires deep analysis, spike solutions, or prototyping. AI accelerates discovery but human judgement is key.",
+                    "Dev: Requires innovative R&D, experimental libraries, or affects core fragile systems. AI outputs need strong scrutiny and manual optimization.\nQA: Requires new testing frameworks or strategies just to validate results. AI may help generate scaffolding but validation is primarily manual.\nInvestigation: Involves building tools, frameworks, or proof-of-concepts to support discovery. AI may assist with snippets but human design drives the solution."
                 ]
             },
             risk: {
@@ -675,6 +675,7 @@
 
     </script>
 </body>
+
 
 
 </html>
