@@ -1,3 +1,9 @@
+☕️ **If this tool helps your team, consider supporting my work!** 
+
+[Buy Me a Coffee](buymeacoffee.com/kendoce)
+
+---
+
 This Story Point Calculator is a lightweight, interactive HTML-based tool to help agile teams estimate story points based on effort, complexity, risk, and other key factors. This calculator is designed to guide meaningful conversations and produce consistent, transparent estimations.
 
 ---
@@ -158,4 +164,5 @@ This mapping is not tied to your team’s actual velocity (e.g., how many points
 ### Author
 
 Created and maintained by [kendoce](https://github.com/kendoce).
+
 
