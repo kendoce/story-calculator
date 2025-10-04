@@ -1,6 +1,6 @@
 ☕️ **If this tool helps your team, consider supporting my work!** 
 
-[Buy Me a Coffee](buymeacoffee.com/kendoce)
+[Buy Me a Coffee](https://buymeacoffee.com/kendoce)
 
 ---
 
@@ -164,5 +164,6 @@ This mapping is not tied to your team’s actual velocity (e.g., how many points
 ### Author
 
 Created and maintained by [kendoce](https://github.com/kendoce).
+
 
 
