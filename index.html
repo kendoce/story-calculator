@@ -1,683 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Story Point Calculator</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-            background-color: #f4f4f4;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #fafafa;
+            min-height: 100vh;
+            color: #2d3748;
+            position: relative;
         }
 
-        .container {
-            max-width: 700px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .section {
-            margin-bottom: 5px;
-            border: 1px solid #0056b3;
-            padding: 10px 20px;
-            border-radius: 10px;
-            text-align: left;
-        }
-
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .button-group button {
-            flex: 0 0 130px;
-            text-align: center;
-        }
-
-        button {
-            padding: 10px 15px;
-            border: 1px solid #0056b3;
-            border-radius: 10px;
-            cursor: pointer;
-            color: #0056b3;
-            font-size: 16px;
-        }
-
-        button.active {
-            background: #0056b3;
-            color: white;
-        }
-
-        .desc {
-            font-size: 14px;
-            color: #555;
-        }
-
-        .result {
-            margin-top: 30px;
-            text-align: center;
-            display: none;
-        }
-
-        #calculate {
-            background: #28a745;
-            color: white;
-            padding: 12px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-
-        #calculate:hover {
-            background: #218838;
-        }
-
-        #reestimate {
-            background: #dc3545;
-            color: white;
-            padding: 12px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-
-        #reestimate:hover {
-            background: #c82333;
-        }
-
-        /* Container for docs */
-        #docs-container {
-            max-width: 800px;
-            /* keep line length readable */
-            margin: 0 auto;
-            /* center horizontally */
-            padding: 20px;
-            text-align: left;
-            /* force text alignment */
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-        }
-
-        /* Headings */
-        #docs-container h1,
-        #docs-container h2,
-        #docs-container h3,
-        #docs-container h4 {
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-            font-weight: bold;
-        }
-
-        /* Paragraphs */
-        #docs-container p {
-            margin: 0.5em 0;
-        }
-
-        /* Lists */
-        #docs-container ul,
-        #docs-container ol {
-            padding-left: 1.5em;
-            margin: 0.5em 0;
-        }
-
-        /* Code blocks */
-        #docs-container pre {
-            background: #f5f5f5;
-            padding: 10px;
-            border-radius: 6px;
-            overflow-x: auto;
-            font-family: monospace;
-        }
-
-        #docs-container code {
-            background: #f5f5f5;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-
-        /* Tables */
-        #docs-container table {
-            border-collapse: collapse;
-            margin: 1em 0;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 100%;
-            background: #fff;
+            height: 100%;
+            background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+            z-index: -1;
         }
 
-        #docs-container th,
-        #docs-container td {
-            border: 1px solid #ccc;
-            padding: 8px 12px;
-            text-align: left;
+        #support-bar-container {
+            padding: 20px 20px 0 20px;
         }
 
-        #docs-container th {
-            background: #f5f5f5;
-            font-weight: bold;
+        #calculator-container {
+            padding: 0 20px 20px 20px;
+        }
+
+        iframe {
+            width: 100%;
+            border: none;
+            display: block;
+        }
+
+        #support-bar-frame {
+            height: 100px;
+        }
+
+        #calculator-frame {
+            min-height: calc(100vh - 120px);
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <h2>Story Point Calculator</h2>
+    <div id="support-bar-container">
+        <iframe id="support-bar-frame" src="buy-me-coffee.html" scrolling="no"></iframe>
+    </div>
 
-        <div style="text-align:center; margin-bottom:20px;">
-            <button id="btn-calculator" class="active">Calculator</button>
-            <button id="btn-docs">Documentation</button>
-        </div>
-
-        <div id="calculator-container">
-            <div class="section">
-                <h3>Estimation Scope</h3>
-                <p>Select whether you're estimating the Epic as a whole or its child stories/tasks.</p>
-                <div class="button-group" id="scope">
-                    <form id="scope-form" style="display: flex; flex-direction: column; gap: 10px;">
-                        <div class="option">
-                            <input type="radio" id="scope-epic" name="scope" value="epic" />
-                            <label for="scope-epic">Epic</label>
-                            <span class="desc">Estimate the entire Epic including coordination, integration, and
-                                cross-squad efforts.</span>
-                        </div>
-                        <div class="option">
-                            <input type="radio" id="scope-children" name="scope" value="children" checked />
-                            <label for="scope-children">Children</label>
-                            <span class="desc">Estimate only the effort for individual stories or tasks within the
-                                Epic.</span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Category Sections -->
-            <div class="section">
-                <h3>Requirements</h3>
-                <p> How well are the requirements understood?</p>
-                <div class="button-group" id="requirements">
-                    <div class="option"><button value="1">Crystal Clear</button><span class="desc"></span></div>
-                    <div class="option"><button value="2">Good</button><span class="desc"></span></div>
-                    <div class="option"><button value="5">Moderate</button><span class="desc"></span></div>
-                    <div class="option"><button value="8">Unclear</button><span class="desc"></span></div>
-                    <textarea class="additional-notes" id="requirements-notes" placeholder="Additional notes..."
-                        style="width:97%; max-width:700px; height:50px; font-family:monospace; font-size:14px; padding:10px; border-radius:8px; border:1px solid #ccc; resize:vertical;"></textarea>
-                </div>
-            </div>
-
-            <div class="section">
-                <h3>Dependencies</h3>
-                <p>Consider both the number of external dependencies and their reliability.</p>
-                <div class="button-group" id="dependencies">
-                    <div class="option"><button value="1">None</button><span class="desc"></span></div>
-                    <div class="option"><button value="2">Low</button><span class="desc"></span></div>
-                    <div class="option"><button value="5">Medium</button><span class="desc"></span></div>
-                    <div class="option"><button value="8">High</button><span class="desc"></span></div>
-                    <textarea class="additional-notes" id="dependency-notes" placeholder="Additional notes..."
-                        style="width:97%; max-width:700px; height:50px; font-family:monospace; font-size:14px; padding:10px; border-radius:8px; border:1px solid #ccc; resize:vertical;"></textarea>
-                </div>
-            </div>
-
-            <div class="section">
-                <h3>Familiarity</h3>
-                <p>How familiar is the team with the domain, tech, or task? How much extra effort we expect to spend learning before we can deliver confidently</p>
-                <div class="button-group" id="familiarity">
-                    <div class="option"><button value="1">Very Familiar</button><span class="desc"></span></div>
-                    <div class="option"><button value="2">Familiar</button><span class="desc"></span></div>
-                    <div class="option"><button value="8">Somewhat Unfamiliar</button><span class="desc"></span></div>
-                    <div class="option"><button value="13">Unfamiliar</button><span class="desc"></span></div>
-                    <textarea class="additional-notes" id="familiarity-notes" placeholder="Additional notes..."
-                        style="width:97%; max-width:700px; height:50px; font-family:monospace; font-size:14px; padding:10px; border-radius:8px; border:1px solid #ccc; resize:vertical;"></textarea>
-                </div>
-            </div>
-
-            <div class="section">
-                <h3>Volume of Work</h3>
-                <p>How much work is there, regardless of difficulty?</p>
-                <div class="button-group" id="volume">
-                    <div class="option"><button value="1">Low</button><span class="desc"></span></div>
-                    <div class="option"><button value="2">Medium</button><span class="desc"></span></div>
-                    <div class="option"><button value="8">High</button><span class="desc"></span></div>
-                    <div class="option"><button value="13">Very High</button><span class="desc"></span></div>
-                    <textarea class="additional-notes" id="volume-notes" placeholder="Additional notes..."
-                        style="width:97%; max-width:700px; height:50px; font-family:monospace; font-size:14px; padding:10px; border-radius:8px; border:1px solid #ccc; resize:vertical;"></textarea>
-                </div>
-            </div>
-
-            <div class="section">
-                <h3>Complexity</h3>
-                <p>How intricate is the work?</p>
-                <div class="button-group" id="complexity">
-                    <div class="option"><button value="1">Low</button><span class="desc"></span></div>
-                    <div class="option"><button value="2">Medium</button><span class="desc"></span></div>
-                    <div class="option"><button value="8">High</button><span class="desc"></span></div>
-                    <div class="option"><button value="13">Very High</button><span class="desc"></span></div>
-                    <textarea class="additional-notes" id="complexity-notes" placeholder="Additional notes..."
-                        style="width:97%; max-width:700px; height:50px; font-family:monospace; font-size:14px; padding:10px; border-radius:8px; border:1px solid #ccc; resize:vertical;"></textarea>
-                </div>
-            </div>
-
-            <div class="section">
-                <h3>Risk</h3>
-                <p>What is the potential for failure or unexpected issues?</p>
-                <div class="button-group" id="risk">
-                    <div class="option"><button value="1">None</button><span class="desc"></span></div>
-                    <div class="option"><button value="2">Low</button><span class="desc"></span></div>
-                    <div class="option"><button value="5">Medium</button><span class="desc"></span></div>
-                    <div class="option"><button value="8">High</button><span class="desc"></span></div>
-                    <textarea class="additional-notes" id="risk-notes" placeholder="Additional notes..."
-                        style="width:97%; max-width:700px; height:50px; font-family:monospace; font-size:14px; padding:10px; border-radius:8px; border:1px solid #ccc; resize:vertical;"></textarea>
-                </div>
-            </div>
-
-            <br />
-
-            <div class="action-buttons">
-                <button id="calculate">Calculate Story Points</button>
-                <button id="reestimate">Re-estimate</button>
-            </div>
-
-            <div class="result" id="result-section">
-                <h1>Recommended Story Points: <span id="story-points"></span></h1>
-                <p>Total Score: <span id="total-score"></span></p>
-            </div>
-
-            <br />
-
-            <div class="section">
-                <h3>Estimation Summary</h3>
-                <p>This summary reflects your current selections and story points. It's written in markdown format and
-                    will
-                    be automatically formatted when you paste it in your Jira issue.</p>
-                <textarea id="summary-box" style="width:97%; max-width:700px; height:250px; font-family:monospace; font-size:14px; padding:10px;
-                    border-radius:8px; border:1px solid #ccc; resize:vertical; white-space:pre-wrap;">
-                </textarea>
-            </div>
-        </div>
-
-        <div id="docs-container"></div>
+    <div id="calculator-container">
+        <iframe id="calculator-frame" src="story-calculator.html"></iframe>
     </div>
 
     <script>
-        const dynamicDescriptions = {
-            requirements: {
-                epic: [
-                    "Business goals and scope are well-defined.",
-                    "Most goals are clear, with minor clarifications needed.",
-                    "Some ambiguity in scope or stakeholder expectations.",
-                    "Vague or evolving goals requiring discovery."
-                ],
-                children: [
-                    "The requirements are crystal clear and fully understood by the team.",
-                    "Requirements are generally understood, with only minor details to clarify.",
-                    "There are known gaps or ambiguities in the requirements that require clarification.",
-                    "The requirements are vague or incomplete, requiring significant discovery."
-                ]
-            },
-            dependencies: {
-                epic: [
-                    "The team has full control. No external input is needed.",
-                    "There are a few known dependencies with reliable ETAs.",
-                    "Multiple dependencies with known timelines or few dependencies but no clear timelines.",
-                    "Numerous or critical dependencies, especially if any are unreliable or undefined."
-                ],
-                children: [
-                    "The team has full control. No external input is needed.",
-                    "There are a few known dependencies with reliable ETAs.",
-                    "Multiple dependencies with known timelines or few dependencies but no clear timelines.",
-                    "Numerous or critical dependencies, especially if any are unreliable or undefined."
-                ]
-            },
-            familiarity: {
-                epic: [
-                    "Team has delivered very similar epics before. AI tools (code completion, documentation lookup) can be used effectively without much research.",
-                    "Team has partial experience with similar initiatives. Some AI-assisted learning might be needed, but the team can quickly adapt.",
-                    "Several aspects are new or require structured learning. AI can help but still requires validation and pair-programming to avoid misuse.",
-                    "Entirely new domain or approach for the team. Even with AI, significant exploration, prototyping, and external consultation may be required."
-                ],
-                children: [
-                    "The work is well within the team’s comfort zone — they’ve done similar stories many times. Tools, patterns, and domain are well-known.",
-                    "Team has done similar tasks or used similar tools. There might be minor levels unfamiliarity, but AI can quickly fill gaps with examples or patterns.",
-                    "The story introduces a new element (tool, integration, or business logic) that the team hasn’t fully handled before — but they know where to look, and the learning curve is manageable.",
-                    "The story is in a completely new space. The team will need to research, prototype, or seek guidance before starting, as there’s little or no prior experience to build on."
-                ]
-            },
-            volume: {
-                epic: [
-                    "A few deliverables or milestones.",
-                    "Several components or features involved.",
-                    "Broad scope across multiple teams or systems.",
-                    "Extensive scope with many deliverables and coordination points."
-                ],
-                children: [
-                    "Dev: A few lines of code or one small change.\nQA: A few of test cases or validations.\nInvestigation: A single focused task (e.g., reviewing one document or answering one question).",
-                    "Dev: Several files or components involved\nQA: A full test suite for a feature or multiple test paths.\nInvestigation: A list of straightforward tasks or fact-finding steps.",
-                    "Dev: Broad changes across multiple modules or services.\nQA: Dozens of test cases, multiple configurations, or repeated validations.\nInvestigation: A large checklist of tasks or deliverables across different scopes",
-                    "Dev: A new service, module, or large-scale refactor.\nQA: Hundreds of test cases or automation across platforms/configurations.\nInvestigation: A wide-ranging effort involving many deliverables or structured outputs."
-                ]
-            },
-            complexity: {
-                epic: [
-                    "Minimal architectural impact, isolated to a single component or service. AI can handle most boilerplate changes.",
-                    "Involves coordination across a few components or services. AI can assist with integration patterns, but careful review and manual orchestration are required.",
-                    "Requires architectural decisions or affects multiple systems. AI can help generate PoCs or reference implementations, but design decisions remain human-driven.",
-                    "Involves groundbreaking design, cross-platform impact, or foundational changes."
-                ],
-                children: [
-                    "Dev: Straightforward code changes, mostly boilerplate. AI likely produces >80% of the solution accurately. Automated unit tests can be generated quickly.\nQA: Basic, happy-path testing is sufficient.\nInvestigation: Simple analysis or validation; AI can help confirm assumptions quickly.",
-                    "Dev: Involves several interacting components or APIs. AI suggestions help but require careful validation.\nQA: Requires a clear test plan with multiple scenarios, possibly including automation of common paths. AI can assist with generating test cases but human review is needed.\nInvestigation: Moderate complexity in research or data gathering; AI can speed up documentation lookup or generate starter code.",
-                    "Dev: Involves complex algorithms, tricky state management, or deep architectural changes. AI can propose approaches but requires heavy validation and iteration.\nQA: Exhaustive end-to-end testing or non-obvious edge cases, may require custom automation scripts. AI can suggest tests but cannot replace exploratory testing.\nInvestigation: Requires deep analysis, spike solutions, or prototyping. AI accelerates discovery but human judgement is key.",
-                    "Dev: Requires innovative R&D, experimental libraries, or affects core fragile systems. AI outputs need strong scrutiny and manual optimization.\nQA: Requires new testing frameworks or strategies just to validate results. AI may help generate scaffolding but validation is primarily manual.\nInvestigation: Involves building tools, frameworks, or proof-of-concepts to support discovery. AI may assist with snippets but human design drives the solution."
-                ]
-            },
-            risk: {
-                epic: [
-                    "No risk of misalignment or regression.",
-                    "Minor risk in integration or delivery.",
-                    "Moderate risk of delays or side effects.",
-                    "High risk of failure, regression, or stakeholder misalignment."
-                ],
-                children: [
-                    "Dev: No risk of side effects.\nQA: Failure is obvious and has minimal impact.\nInvestigation: Clear scope and low uncertainty.",
-                    "Dev: Low risk of impacting other features.\nQA: Standard regression is sufficient to mitigate risk.\nInvestigation: Minor uncertainty or known paths.",
-                    "Dev: Changes touch shared code.\nQA: Requires exploratory testing to find side effects.\nInvestigation: Moderate uncertainty or unclear outcomes.",
-                    "Dev: High risk of destabilizing the system.\nQA: High risk of data corruption or security vulnerabilities.\nInvestigation: High uncertainty or risk of inconclusive results."
-                ]
-            }
-        };
-
-        const dynamicValues = {
-            requirements: {
-                epic: [5, 8, 21, 34],
-                children: [1, 3, 5, 8]
-            },
-            dependencies: {
-                epic: [5, 8, 21, 34],
-                children: [1, 3, 5, 8]
-            },
-            familiarity: {
-                epic: [5, 13, 21, 34],
-                children: [1, 3, 8, 13]
-            },
-            volume: {
-                epic: [5, 13, 21, 34],
-                children: [1, 3, 8, 13]
-            },
-            complexity: {
-                epic: [5, 13, 21, 34],
-                children: [1, 3, 8, 13]
-            },
-            risk: {
-                epic: [5, 8, 13, 21],
-                children: [1, 3, 5, 8]
-            }
-        };
-
-
-        let selections = {
-            dependencies: null,
-            requirements: null,
-            familiarity: null,
-            complexity: null,
-            risk: null,
-            volume: null,
-            scope: "children" // Default scope is children
-        };
-
-        function resetSelections() {
-            Object.keys(selections).forEach(cat => {
-                if (cat !== 'scope') selections[cat] = null;
-                const group = document.getElementById(cat);
-                if (group) group.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            });
-        }
-
-        const btnCalculator = document.getElementById('btn-calculator');
-        const btnDocs = document.getElementById('btn-docs');
-        const calcContainer = document.getElementById('calculator-container');
-        const docsContainer = document.getElementById('docs-container');
-
-        btnCalculator.addEventListener('click', () => {
-            // Show calculator, hide docs
-            calcContainer.style.display = 'block';
-            docsContainer.style.display = 'none';
-
-            // Highlight active button
-            btnCalculator.classList.add('active');
-            btnDocs.classList.remove('active');
-        });
-
-        btnDocs.addEventListener('click', async () => {
-            // Show docs, hide calculator
-            calcContainer.style.display = 'none';
-            docsContainer.style.display = 'block';
-
-            // Highlight active button
-            btnDocs.classList.add('active');
-            btnCalculator.classList.remove('active');
-
-            // Load README once
-            if (!docsContainer.innerHTML.trim()) {
-                try {
-                    const response = await fetch('README.md');
-                    if (!response.ok) throw new Error('Failed to fetch README.md');
-                    const mdText = await response.text();
-                    docsContainer.innerHTML = marked.parse(mdText); // <-- converts Markdown to HTML
-                } catch (err) {
-                    docsContainer.innerHTML = `<p style="color:red;">Error loading documentation: ${err.message}</p>`;
+        // Auto-resize iframe based on content
+        window.addEventListener('message', function(e) {
+            if (e.data.type === 'resize') {
+                const frame = document.getElementById(e.data.frameId);
+                if (frame) {
+                    frame.style.height = e.data.height + 'px';
                 }
             }
         });
 
-        function updateDescriptions(scope) {
-            Object.keys(dynamicDescriptions).forEach(category => {
-                const group = document.getElementById(category);
-                if (!group) return;
-                const descSpans = group.querySelectorAll(".desc");
-                dynamicDescriptions[category][scope].forEach((text, index) => {
-                    if (descSpans[index]) {
-                        descSpans[index].innerHTML = text.replace(/\n/g, '<br>');
-                    }
-                });
-            });
+        // Adjust calculator frame height dynamically
+        function adjustCalculatorHeight() {
+            const frame = document.getElementById('calculator-frame');
+            const viewportHeight = window.innerHeight;
+            const supportBarHeight = document.getElementById('support-bar-container').offsetHeight;
+            frame.style.height = (viewportHeight - supportBarHeight - 40) + 'px';
         }
 
-        function updateValues(scope) {
-            Object.keys(dynamicValues).forEach(category => {
-                const group = document.getElementById(category);
-                if (!group) return;
-                const buttons = group.querySelectorAll("button");
-                dynamicValues[category][scope].forEach((val, index) => {
-                    if (buttons[index]) {
-                        buttons[index].value = val;
-                    }
-                });
-            });
-        }
-
-        document.querySelectorAll('input[name="scope"]').forEach(radio => {
-            radio.addEventListener('change', function () {
-                selections.scope = this.value;
-                updateDescriptions(selections.scope);
-                updateValues(selections.scope);
-                resetSelections();
-            });
-        });
-
-        document.querySelectorAll('.button-group button').forEach(button => {
-            if (button.closest('#scope')) return;
-            button.addEventListener('click', function () {
-                let category = this.parentElement.parentElement.id;
-                selections[category] = parseInt(this.value);
-                this.parentElement.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        function calculateScore(s, w) {
-            return (
-                s.requirements * w.requirements +
-                s.dependencies * w.dependencies +
-                s.familiarity * w.familiarity +
-                s.volume * w.volume +
-                s.complexity * w.complexity +
-                s.risk * w.risk
-            );
-        }
-
-        //The ceiling for the efforts will be determined by <previous ceiling> + (<effort multiplier> * <next fibonnaci sequence>)
-        //The lowest score that can be produced by the tool is 8.2. As initial baseline, 10points is set as the ceiling for 1 SP. This can change based on team's intuition.
-        //This makes the "effort multiplier" = 2
-        function mapChildrenScoreToPoints(score) {
-            if (score <= 10) return 1;
-            if (score <= 14) return 2; //10 baseline + (2 points * 2) following the fibonacci sequence
-            if (score <= 20) return 3; //14 + (2 points * 3) following the fibonacci sequence
-            if (score <= 30) return 5; //20 + (2 points * 5) following the fibonacci sequence
-            if (score <= 46) return 8; //30 + (2 points * 8) following the fibonacci sequence
-            if (score <= 72) return 13; //46 + (2 points * 13) following the fibonacci sequence
-            return "21+ (Consider splitting or converting to an epic)";
-        }
-
-        function mapEpicScoreToPoints(score) {
-            if (score <= 72) return 13; //copied from children. Usually, it's recommended to split as early as 13SP so this is used as baseline
-            //Note: As epics get bigger, the more unpredictable the effort becomes. To account for unpredictability, a variance multiplier is set.
-            if (score <= 114) return 21; //(72 + (2 points * 21)) * 1 
-            if (score <= 164) return 34; //(114 + (2 points * 34)) * 0.9 
-            if (score <= 233) return 55; //(164 + (2 points * 55)) * 0.85 
-            if (score <= 329) return 89; //(233 + (2 points * 89)) * 0.8  
-            return "144+ (Split Epic or convert to an initiative)";
-        }
-
-        document.getElementById('calculate').addEventListener('click', function () {
-            if (Object.values(selections).slice(0, 6).includes(null)) {
-                alert("Please make a selection for each category.");
-                return;
-            }
-
-            const weights = {
-                children: {
-                    requirements: 1,   // requirements is set to 1 as unclear requirements can be denied or re-estimated once requirements are clearer.
-                    dependencies: 1.2, // dependencies is slightly increased to account for sudden changes in the scope but not as high as complexity as these can be re-planned.
-                    familiarity: 1.5,  // familiarity is increased but not doubled since it is not has heavy as complexity.
-                    volume: 1.5,       // volume is increased as it has the same impact as familiarity.
-                    complexity: 2,     // weight of complexity is doubled as it's a primary factor of effort
-                    risk: 1.0          // risk is treated as 1 since risks can be mitigated.
-
-                },
-                epic: {
-                    requirements: 1.5, // slightly higher because epics are fuzzier
-                    dependencies: 2.0, // coordination impact higher that stories but still manageable
-                    familiarity: 3.0,  // similar impact as stories
-                    volume: 2.5,       // bulkier scope
-                    complexity: 3.0,   // higher driver in terms of epics
-                    risk: 1.5          // risks at epic level are more expensive
-                }
-            };
-
-            let totalScoreRaw = selections.scope === "epic"
-                ? calculateScore(selections, weights.epic)
-                : calculateScore(selections, weights.children);
-
-            const totalScore = parseFloat(totalScoreRaw.toFixed(1));
-            const storyPoints = selections.scope === "epic"
-                ? mapEpicScoreToPoints(totalScore)
-                : mapChildrenScoreToPoints(totalScore);
-
-            document.getElementById('total-score').textContent = totalScore;
-            document.getElementById('story-points').textContent = storyPoints;
-            document.getElementById('result-section').style.display = 'block';
-        });
-
-        document.getElementById('reestimate').addEventListener('click', function () {
-            const currentScope = selections.scope; // preserve current scope
-
-            // Reset selections except scope
-            Object.keys(selections).forEach(cat => {
-                if (cat !== 'scope') selections[cat] = null;
-                const group = document.getElementById(cat);
-                if (group) group.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                const notes = group?.querySelector('.additional-notes');
-                if (notes) notes.value = ''; // clear notes
-            });
-
-            // Reset result display
-            document.getElementById('total-score').textContent = '';
-            document.getElementById('story-points').textContent = '';
-            document.getElementById('result-section').style.display = 'none';
-
-            // Reset summary box
-            const summaryBox = document.getElementById('summary-box');
-            if (summaryBox) summaryBox.value = '';
-
-            // Re-apply descriptions and button values for the current scope
-            updateDescriptions(currentScope);
-            updateValues(currentScope);
-        });
-
-
-        // Initialize descriptions on load
-        updateDescriptions(selections.scope);
-
-        function updateSummaryBoxWithDescriptions() {
-            const categories = ["requirements", "dependencies", "familiarity", "volume", "complexity", "risk"];
-            let summary = "";
-
-            categories.forEach(cat => {
-                const group = document.getElementById(cat);
-                const active = group.querySelector("button.active");
-                const desc = group.querySelector("button.active + .desc");
-                const notes = group.querySelector(".additional-notes");
-                const notesText = notes ? notes.value.trim() : "";
-                if (active && desc) {
-                    const label = group.previousElementSibling.textContent.trim();
-                    const value = active.textContent.trim();
-                    const description = desc.innerText.trim();
-                    summary += `### ${label}\n**Selected:** ${value}\n* _${description}_\n\n**Additional Notes:**\n${notesText}\n\n`;
-                }
-            });
-
-            const total = document.getElementById("total-score").textContent;
-            const points = document.getElementById("story-points").textContent;
-            if (total && points) {
-                summary += `### **Story Points**: **${points}**\n_Total Score: ${total}\n `;
-            }
-
-            const box = document.getElementById("summary-box");
-            if (box && !box.matches(":focus")) {
-                box.value = summary;
-            }
-        }
-
-        // Trigger summary update on calculate
-        document.getElementById('calculate').addEventListener('click', updateSummaryBoxWithDescriptions);
-
-
+        window.addEventListener('load', adjustCalculatorHeight);
+        window.addEventListener('resize', adjustCalculatorHeight);
     </script>
 </body>
-
-
-
 </html>
-
-
