@@ -3,8 +3,7 @@
     {
       "source": "/",
       "destination": "https://kendoce.com/tools/story-calculator",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     }
   ]
 }
