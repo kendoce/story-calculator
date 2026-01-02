@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://kendoce.com/tools/story-point-calculator/",
+      "permanent": true
+    }
+  ]
+}
