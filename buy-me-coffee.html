@@ -101,4 +101,29 @@
                 ☕ Buy Me a Coffee
             </a>
         </div>
+        <script>
+            (function() {
+                const frameId = 'support-bar-frame';
+                const sendHeight = () => {
+                    const height = Math.max(
+                        document.documentElement.scrollHeight,
+                        document.body.scrollHeight
+                    );
+                    if (window.parent !== window) {
+                        window.parent.postMessage({ type: 'resize', frameId, height }, '*');
+                    }
+                };
+
+                if ('ResizeObserver' in window) {
+                    const resizeObserver = new ResizeObserver(() => sendHeight());
+                    resizeObserver.observe(document.body);
+                } else {
+                    window.addEventListener('resize', sendHeight);
+                }
+
+                window.addEventListener('load', sendHeight);
+                sendHeight();
+            })();
+        </script>
+</body>
 </html>

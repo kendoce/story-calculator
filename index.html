@@ -17,6 +17,10 @@
             min-height: 100vh;
             color: #2d3748;
             position: relative;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
 
         body::before {
@@ -32,59 +36,47 @@
             z-index: -1;
         }
 
-        #support-bar-container {
-            padding: 20px 20px 0 20px;
-        }
-
-        #calculator-container {
-            padding: 0 20px 20px 20px;
-        }
-
         iframe {
             width: 100%;
             border: none;
             display: block;
         }
 
-        #support-bar-frame {
-            height: 100px;
+        #calculator-container,
+        #support-bar-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         #calculator-frame {
-            min-height: calc(100vh - 120px);
+            min-height: 400px;
+        }
+
+        #support-bar-frame {
+            min-height: 0;
         }
     </style>
 </head>
 <body>
-    <div id="support-bar-container">
-        <iframe id="support-bar-frame" src="buy-me-coffee.html" scrolling="no"></iframe>
+    <div id="calculator-container">
+        <iframe id="calculator-frame" src="story-calculator.html" scrolling="no"></iframe>
     </div>
 
-    <div id="calculator-container">
-        <iframe id="calculator-frame" src="story-calculator.html"></iframe>
+    <div id="support-bar-container">
+        <iframe id="support-bar-frame" src="buy-me-coffee.html" scrolling="no"></iframe>
     </div>
 
     <script>
         // Auto-resize iframe based on content
         window.addEventListener('message', function(e) {
-            if (e.data.type === 'resize') {
+            if (e.data?.type === 'resize') {
                 const frame = document.getElementById(e.data.frameId);
-                if (frame) {
+                if (frame && typeof e.data.height === 'number') {
                     frame.style.height = e.data.height + 'px';
                 }
             }
         });
-
-        // Adjust calculator frame height dynamically
-        function adjustCalculatorHeight() {
-            const frame = document.getElementById('calculator-frame');
-            const viewportHeight = window.innerHeight;
-            const supportBarHeight = document.getElementById('support-bar-container').offsetHeight;
-            frame.style.height = (viewportHeight - supportBarHeight - 40) + 'px';
-        }
-
-        window.addEventListener('load', adjustCalculatorHeight);
-        window.addEventListener('resize', adjustCalculatorHeight);
     </script>
 </body>
 </html>
